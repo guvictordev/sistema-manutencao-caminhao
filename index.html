@@ -1,0 +1,67 @@
+<html lang="pt-br">
+<head>
+
+<meta charset="UTF-8">
+
+<title>Sistema de Manutenção</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Sistema de Manutenção de Caminhões</h1>
+
+<div class="dashboard">
+
+<p>Total: <span id="total">0</span></p>
+
+<p>Pendentes: <span id="pendentes">0</span></p>
+
+<p>Concluídos: <span id="concluidos">0</span></p>
+
+</div>
+
+<h2>Nova Manutenção</h2>
+
+<input id="caminhao" placeholder="Placa">
+
+<input id="km" placeholder="KM">
+
+<input id="servico" placeholder="Serviço">
+
+<input type="date" id="data">
+
+<select id="status">
+
+<option>Pendente</option>
+
+<option>Concluído</option>
+
+</select>
+
+<button onclick="cadastrar()">
+
+Cadastrar
+
+</button>
+
+<h2>Histórico</h2>
+
+<input
+placeholder="Buscar caminhão"
+id="busca"
+onkeyup="filtrar()"
+>
+
+<ul id="lista"></ul>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
