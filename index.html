@@ -1,9 +1,10 @@
 <html lang="pt-br">
+
 <head>
 
 <meta charset="UTF-8">
 
-<title>Sistema de Manutenção</title>
+<title>Controle de Manutenção de Caminhões</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -13,35 +14,17 @@
 
 <div class="container">
 
-<h1>Sistema de Manutenção de Caminhões</h1>
+<h1>Controle de Manutenção</h1>
 
-<div class="dashboard">
+<input id="placa" placeholder="Placa do caminhão">
 
-<p>Total: <span id="total">0</span></p>
+<input id="servico" placeholder="Serviço realizado">
 
-<p>Pendentes: <span id="pendentes">0</span></p>
+<input id="kmAtual" placeholder="KM atual">
 
-<p>Concluídos: <span id="concluidos">0</span></p>
-
-</div>
-
-<h2>Nova Manutenção</h2>
-
-<input id="caminhao" placeholder="Placa">
-
-<input id="km" placeholder="KM">
-
-<input id="servico" placeholder="Serviço">
+<input id="kmProximo" placeholder="KM próxima troca">
 
 <input type="date" id="data">
-
-<select id="status">
-
-<option>Pendente</option>
-
-<option>Concluído</option>
-
-</select>
 
 <button onclick="cadastrar()">
 
@@ -51,12 +34,6 @@ Cadastrar
 
 <h2>Histórico</h2>
 
-<input
-placeholder="Buscar caminhão"
-id="busca"
-onkeyup="filtrar()"
->
-
 <ul id="lista"></ul>
 
 </div>
@@ -64,4 +41,5 @@ onkeyup="filtrar()"
 <script src="script.js"></script>
 
 </body>
+
 </html>
