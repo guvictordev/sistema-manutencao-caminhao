@@ -4,22 +4,46 @@ JSON.parse(localStorage.getItem("manutencao"))
 
 function cadastrar(){
 
+let placa =
+document.getElementById("placa").value.toUpperCase()
+
+let servico =
+document.getElementById("servico").value
+
+let kmAtual =
+document.getElementById("kmAtual").value
+
+let kmProximo =
+document.getElementById("kmProximo").value
+
+let data =
+document.getElementById("data").value
+
+if(
+placa=="" ||
+servico=="" ||
+kmAtual=="" ||
+kmProximo=="" ||
+data==""
+){
+
+alert("Preencha todos os campos")
+
+return
+
+}
+
 let registro = {
 
-caminhao:
-document.getElementById("caminhao").value,
+placa,
 
-km:
-document.getElementById("km").value,
+servico,
 
-servico:
-document.getElementById("servico").value,
+kmAtual,
 
-data:
-document.getElementById("data").value,
+kmProximo,
 
-status:
-document.getElementById("status").value
+data
 
 }
 
@@ -29,59 +53,78 @@ salvar()
 
 mostrar()
 
-dashboard()
+limpar()
 
 }
 
 function salvar(){
 
 localStorage.setItem(
+
 "manutencao",
+
 JSON.stringify(dados)
+
 )
 
 }
 
-function mostrar(lista=dados){
+function mostrar(){
 
-let ul =
+let lista =
 document.getElementById("lista")
 
-ul.innerHTML=""
+lista.innerHTML=""
 
-lista.forEach((d,i)=>{
+let agrupado = {}
 
-ul.innerHTML +=
+dados.forEach((d,i)=>{
 
-`<li class="${
-d.status=="Pendente"
-?"pendente"
-:"concluido"
-}">
+if(!agrupado[d.placa]){
 
-${d.caminhao}
+agrupado[d.placa] = []
 
-|
+}
 
-${d.servico}
+agrupado[d.placa].push({
 
-|
+...d,
 
-KM ${d.km}
+index:i
 
-|
+})
 
-${d.data}
+})
 
-|
+for(let placa in agrupado){
 
-${d.status}
+lista.innerHTML +=
 
-<span class="excluir"
+`<h3>🚚 ${placa}</h3>`
 
-onclick="excluir(${i})">
+agrupado[placa].forEach(d=>{
 
-X
+lista.innerHTML +=
+
+`<li>
+
+🔧 ${d.servico}
+
+<br>
+
+KM atual: ${d.kmAtual}
+
+<br>
+
+Próxima troca: ${d.kmProximo}
+
+<br>
+
+📅 ${d.data}
+
+<span onclick="excluir(${d.index})">
+
+❌
 
 </span>
 
@@ -91,7 +134,11 @@ X
 
 }
 
+}
+
 function excluir(i){
+
+if(confirm("Excluir manutenção?")){
 
 dados.splice(i,1)
 
@@ -99,48 +146,22 @@ salvar()
 
 mostrar()
 
-dashboard()
+}
 
 }
 
-function dashboard(){
+function limpar(){
 
-document.getElementById("total")
-.innerText = dados.length
+document.getElementById("placa").value=""
 
-document.getElementById("pendentes")
-.innerText =
-dados.filter(
-d=>d.status=="Pendente"
-).length
+document.getElementById("servico").value=""
 
-document.getElementById("concluidos")
-.innerText =
-dados.filter(
-d=>d.status=="Concluído"
-).length
+document.getElementById("kmAtual").value=""
 
-}
+document.getElementById("kmProximo").value=""
 
-function filtrar(){
-
-let busca =
-document.getElementById("busca")
-.value.toLowerCase()
-
-let filtro =
-dados.filter(d=>
-
-d.caminhao
-.toLowerCase()
-.includes(busca)
-
-)
-
-mostrar(filtro)
+document.getElementById("data").value=""
 
 }
 
 mostrar()
-
-dashboard()
