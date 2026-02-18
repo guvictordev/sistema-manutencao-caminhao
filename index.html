@@ -4,9 +4,11 @@
 
 <meta charset="UTF-8">
 
-<title>Controle de Manutenção de Caminhões</title>
+<title>Controle de Manutenção</title>
 
 <link rel="stylesheet" href="style.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 </head>
 
@@ -16,21 +18,19 @@
 
 <h1>Controle de Manutenção</h1>
 
-<input id="placa" placeholder="Placa do caminhão">
+<input id="placa" placeholder="Placa">
 
-<input id="servico" placeholder="Serviço realizado">
+<input id="servico" placeholder="Serviço">
 
-<input id="kmAtual" placeholder="KM atual">
+<input id="kmAtual" placeholder="KM Atual">
 
-<input id="kmProximo" placeholder="KM próxima troca">
+<input id="kmProximo" placeholder="KM Próxima Troca">
 
 <input type="date" id="data">
 
-<button onclick="cadastrar()">
+<button onclick="cadastrar()">Salvar</button>
 
-Cadastrar
-
-</button>
+<button onclick="exportarPDF()">Exportar PDF</button>
 
 <h2>Histórico</h2>
 
@@ -41,5 +41,4 @@ Cadastrar
 <script src="script.js"></script>
 
 </body>
-
 </html>
