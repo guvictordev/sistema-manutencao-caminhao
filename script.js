@@ -2,58 +2,146 @@ let dados =
 JSON.parse(localStorage.getItem("manutencao"))
 || []
 
+let editando = -1
+
 function cadastrar(){
-
-let placa =
-document.getElementById("placa").value.toUpperCase()
-
-let servico =
-document.getElementById("servico").value
-
-let kmAtual =
-document.getElementById("kmAtual").value
-
-let kmProximo =
-document.getElementById("kmProximo").value
-
-let data =
-document.getElementById("data").value
-
-if(
-placa=="" ||
-servico=="" ||
-kmAtual=="" ||
-kmProximo=="" ||
-data==""
-){
-
-alert("Preencha todos os campos")
-
-return
-
-}
 
 let registro = {
 
-placa,
+placa:
+document.getElementById("placa").value.toUpperCase(),
 
-servico,
+servico:
+document.getElementById("servico").value,
 
-kmAtual,
+kmAtual:
+document.getElementById("kmAtual").value,
 
-kmProximo,
+kmProximo:
+document.getElementById("kmProximo").value,
 
-data
+data:
+document.getElementById("data").value
 
 }
 
+if(editando==-1){
+
 dados.push(registro)
+
+}else{
+
+dados[editando] = registro
+
+editando=-1
+
+}
 
 salvar()
 
 mostrar()
 
 limpar()
+
+}
+
+function mostrar(){
+
+let lista =
+document.getElementById("lista")
+
+lista.innerHTML=""
+
+dados.forEach((d,i)=>{
+
+let alerta=""
+
+if(
+parseInt(d.kmAtual)
+>=
+parseInt(d.kmProximo)-1000
+){
+
+alerta =
+"<div class='alerta'>⚠️ Próximo da troca</div>"
+
+}
+
+lista.innerHTML+=`
+
+<li>
+
+🚚 ${d.placa}
+
+<br>
+
+🔧 ${d.servico}
+
+<br>
+
+KM ${d.kmAtual}
+
+→ ${d.kmProximo}
+
+<br>
+
+📅 ${d.data}
+
+${alerta}
+
+<br>
+
+<span class="editar"
+onclick="editar(${i})">
+
+✏️
+
+</span>
+
+<span class="excluir"
+onclick="excluir(${i})">
+
+❌
+
+</span>
+
+</li>
+
+`
+
+})
+
+}
+
+function editar(i){
+
+let d = dados[i]
+
+document.getElementById("placa").value = d.placa
+
+document.getElementById("servico").value = d.servico
+
+document.getElementById("kmAtual").value = d.kmAtual
+
+document.getElementById("kmProximo").value = d.kmProximo
+
+document.getElementById("data").value = d.data
+
+editando = i
+
+}
+
+function excluir(i){
+
+if(confirm("Excluir?")){
+
+dados.splice(i,1)
+
+salvar()
+
+mostrar()
+
+}
 
 }
 
@@ -69,87 +157,6 @@ JSON.stringify(dados)
 
 }
 
-function mostrar(){
-
-let lista =
-document.getElementById("lista")
-
-lista.innerHTML=""
-
-let agrupado = {}
-
-dados.forEach((d,i)=>{
-
-if(!agrupado[d.placa]){
-
-agrupado[d.placa] = []
-
-}
-
-agrupado[d.placa].push({
-
-...d,
-
-index:i
-
-})
-
-})
-
-for(let placa in agrupado){
-
-lista.innerHTML +=
-
-`<h3>🚚 ${placa}</h3>`
-
-agrupado[placa].forEach(d=>{
-
-lista.innerHTML +=
-
-`<li>
-
-🔧 ${d.servico}
-
-<br>
-
-KM atual: ${d.kmAtual}
-
-<br>
-
-Próxima troca: ${d.kmProximo}
-
-<br>
-
-📅 ${d.data}
-
-<span onclick="excluir(${d.index})">
-
-❌
-
-</span>
-
-</li>`
-
-})
-
-}
-
-}
-
-function excluir(i){
-
-if(confirm("Excluir manutenção?")){
-
-dados.splice(i,1)
-
-salvar()
-
-mostrar()
-
-}
-
-}
-
 function limpar(){
 
 document.getElementById("placa").value=""
@@ -161,6 +168,47 @@ document.getElementById("kmAtual").value=""
 document.getElementById("kmProximo").value=""
 
 document.getElementById("data").value=""
+
+}
+
+function exportarPDF(){
+
+const { jsPDF } = window.jspdf
+
+let doc = new jsPDF()
+
+doc.text(
+
+"Relatório de Manutenção",
+
+20,
+
+20
+
+)
+
+let y=30
+
+dados.forEach(d=>{
+
+doc.text(
+
+`${d.placa}
+${d.servico}
+KM ${d.kmAtual} → ${d.kmProximo}
+${d.data}`,
+
+20,
+
+y
+
+)
+
+y+=20
+
+})
+
+doc.save("manutencao.pdf")
 
 }
 
