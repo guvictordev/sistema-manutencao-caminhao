@@ -14,7 +14,13 @@ margin-top:30px;
 background:#161b22;
 padding:20px;
 border-radius:10px;
-width:350px;
+width:380px;
+
+}
+
+h1{
+
+text-align:center;
 
 }
 
@@ -25,6 +31,15 @@ padding:10px;
 margin-top:10px;
 border:none;
 border-radius:5px;
+font-size:14px;
+
+}
+
+input{
+
+background:#0d1117;
+color:white;
+border:1px solid #30363d;
 
 }
 
@@ -33,6 +48,7 @@ button{
 background:#238636;
 color:white;
 cursor:pointer;
+font-weight:bold;
 
 }
 
@@ -42,31 +58,47 @@ background:#2ea043;
 
 }
 
+.pdf{
+
+background:#1f6feb;
+
+}
+
+.pdf:hover{
+
+background:#388bfd;
+
+}
+
+ul{
+
+list-style:none;
+padding:0;
+
+}
+
 li{
 
 background:#0d1117;
 padding:10px;
-margin-top:5px;
+margin-top:10px;
 border-radius:5px;
-
-}
-
-span{
-
-cursor:pointer;
-margin-left:10px;
+font-size:14px;
 
 }
 
 .editar{
 
 color:orange;
+cursor:pointer;
+margin-right:10px;
 
 }
 
 .excluir{
 
 color:red;
+cursor:pointer;
 
 }
 
@@ -74,5 +106,6 @@ color:red;
 
 color:orange;
 font-weight:bold;
+margin-top:5px;
 
 }
