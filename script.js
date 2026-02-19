@@ -4,46 +4,34 @@ JSON.parse(localStorage.getItem("manutencao"))
 
 let editando = -1
 
+
 function cadastrar(){
-
-let placa =
-document.getElementById("placa").value.toUpperCase()
-
-let servico =
-document.getElementById("servico").value
-
-let kmAtual =
-document.getElementById("kmAtual").value
-
-let kmProximo =
-document.getElementById("kmProximo").value
-
-let data =
-document.getElementById("data").value
-
-if(
-placa=="" ||
-servico=="" ||
-kmAtual=="" ||
-kmProximo=="" ||
-data==""
-){
-
-alert("Preencha todos os campos")
-
-return
-
-}
 
 let registro = {
 
-placa,
-servico,
-kmAtual,
-kmProximo,
-data
+frota:
+document.getElementById("frota").value,
+
+veiculo:
+document.getElementById("veiculo").value,
+
+carreta:
+document.getElementById("carreta").value,
+
+servico:
+document.getElementById("servico").value,
+
+fornecedor:
+document.getElementById("fornecedor").value,
+
+km:
+document.getElementById("km").value,
+
+data:
+document.getElementById("data").value
 
 }
+
 
 if(editando==-1){
 
@@ -51,19 +39,18 @@ dados.push(registro)
 
 }else{
 
-dados[editando] = registro
-
+dados[editando]=registro
 editando=-1
 
 }
 
 salvar()
-
 mostrar()
-
 limpar()
 
 }
+
+
 
 function mostrar(){
 
@@ -74,83 +61,83 @@ lista.innerHTML=""
 
 dados.forEach((d,i)=>{
 
-let alerta=""
+lista.innerHTML+=
 
-if(
-parseInt(d.kmAtual)
->=
-parseInt(d.kmProximo)-1000
-){
+`
 
-alerta =
-"<div class='alerta'>⚠️ Próximo da manutenção</div>"
+<li>
 
-}
+🚚 Frota: ${d.frota}<br>
 
-lista.innerHTML +=
+Veículo: ${d.veiculo}<br>
 
-`<li>
-
-🚚 <b>${d.placa}</b><br>
+Carreta: ${d.carreta}<br>
 
 🔧 ${d.servico}<br>
 
-KM ${d.kmAtual} → ${d.kmProximo}<br>
+🏢 ${d.fornecedor}<br>
+
+KM: ${d.km}<br>
 
 📅 ${d.data}
-
-${alerta}
 
 <br><br>
 
 <span class="editar"
 onclick="editar(${i})">
 
-✏️ Editar
+Editar
 
 </span>
+
 
 <span class="excluir"
 onclick="excluir(${i})">
 
-❌ Excluir
+Excluir
 
 </span>
 
-</li>`
+</li>
+
+`
 
 })
 
 }
 
+
+
 function editar(i){
 
-let d = dados[i]
+let d=dados[i]
 
-document.getElementById("placa").value =
-d.placa
+document.getElementById("frota").value=d.frota
 
-document.getElementById("servico").value =
-d.servico
+document.getElementById("veiculo").value=d.veiculo
 
-document.getElementById("kmAtual").value =
-d.kmAtual
+document.getElementById("carreta").value=d.carreta
 
-document.getElementById("kmProximo").value =
-d.kmProximo
+document.getElementById("servico").value=d.servico
 
-document.getElementById("data").value =
-d.data
+document.getElementById("fornecedor").value=d.fornecedor
 
-editando = i
+document.getElementById("km").value=d.km
+
+document.getElementById("data").value=d.data
+
+
+editando=i
 
 window.scrollTo(0,0)
 
 }
 
+
+
 function excluir(i){
 
-if(confirm("Excluir manutenção?")){
+if(confirm("Excluir?")){
 
 dados.splice(i,1)
 
@@ -162,24 +149,41 @@ mostrar()
 
 }
 
+
+
 function salvar(){
 
 localStorage.setItem(
+
 "manutencao",
+
 JSON.stringify(dados)
+
 )
 
 }
 
+
+
 function limpar(){
 
-document.getElementById("placa").value=""
+document.getElementById("frota").value=""
+
+document.getElementById("veiculo").value=""
+
+document.getElementById("carreta").value=""
+
 document.getElementById("servico").value=""
-document.getElementById("kmAtual").value=""
-document.getElementById("kmProximo").value=""
+
+document.getElementById("fornecedor").value=""
+
+document.getElementById("km").value=""
+
 document.getElementById("data").value=""
 
 }
+
+
 
 function exportarPDF(){
 
@@ -187,58 +191,36 @@ const { jsPDF } = window.jspdf
 
 let doc = new jsPDF()
 
-doc.setFontSize(16)
-
-doc.text(
-"Relatório de Manutenção",
-20,
-20
-)
+doc.text("Relatório de Manutenção",20,20)
 
 let y=30
 
 dados.forEach(d=>{
 
-doc.setFontSize(12)
-
 doc.text(
-`Placa: ${d.placa}`,
+
+`Frota: ${d.frota}
+Veículo: ${d.veiculo}
+Carreta: ${d.carreta}
+Serviço: ${d.servico}
+Fornecedor: ${d.fornecedor}
+KM: ${d.km}
+Data: ${d.data}`,
+
 20,
+
 y
+
 )
 
-y+=6
-
-doc.text(
-`Serviço: ${d.servico}`,
-20,
-y
-)
-
-y+=6
-
-doc.text(
-`KM: ${d.kmAtual} → ${d.kmProximo}`,
-20,
-y
-)
-
-y+=6
-
-doc.text(
-`Data: ${d.data}`,
-20,
-y
-)
-
-y+=10
+y+=30
 
 })
 
-doc.save(
-"relatorio_manutencao.pdf"
-)
+doc.save("relatorio.pdf")
 
 }
+
+
 
 mostrar()
