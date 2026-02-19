@@ -4,11 +4,10 @@
 
 <meta charset="UTF-8">
 
-<title>Controle de Manutenção de Caminhões</title>
+<title>Controle de Manutenção</title>
 
 <link rel="stylesheet" href="style.css">
 
-<!-- Biblioteca PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 </head>
@@ -19,29 +18,48 @@
 
 <h1>Controle de Manutenção</h1>
 
-<input id="placa" placeholder="Placa do caminhão">
+<label>Frota</label>
+
+<select id="frota">
+
+<option value="">Selecione</option>
+
+<option>21094</option>
+<option>21095</option>
+<option>21114</option>
+<option>21333</option>
+<option>21386</option>
+<option>21443</option>
+
+</select>
+
+
+<input id="veiculo" placeholder="Veículo (Marca/Modelo + Placa)">
+
+<input id="carreta" placeholder="Carreta">
 
 <input id="servico" placeholder="Serviço realizado">
 
-<input id="kmAtual" type="number" placeholder="KM Atual">
+<input id="fornecedor" placeholder="Fornecedor">
 
-<input id="kmProximo" type="number" placeholder="KM Próxima Troca">
+<input id="km" type="number" placeholder="KM da manutenção">
 
 <input type="date" id="data">
 
 <button onclick="cadastrar()">Salvar</button>
 
-<button onclick="exportarPDF()" class="pdf">
-📄 Exportar PDF
-</button>
+<button onclick="exportarPDF()">Exportar PDF</button>
+
 
 <h2>Histórico</h2>
 
 <ul id="lista"></ul>
+
 
 </div>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
